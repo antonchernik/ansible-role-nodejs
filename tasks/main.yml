@@ -1,0 +1,33 @@
+---
+- name: Nodejs ROLE | Download setup_6.x
+  get_url:
+    url: https://deb.nodesource.com/setup_6.x
+    dest: /tmp/setup_6.x.sh
+    mode: 0777
+
+- name: Nodejs ROLE | Run setup_6.x.sh
+  shell: bash setup_6.x.sh
+  args:
+    chdir: /tmp/
+
+- name: Nodejs ROLE | Updating apt cache
+  apt:
+    update_cache: yes
+
+- name: Nodejs ROLE | Install packages
+  apt: name={{item}}
+  with_items:
+    - libcairo2-dev
+    - libjpeg-dev
+    - libpango1.0-dev
+    - libgif-dev
+    - nodejs
+
+- name: Nodejs ROLE | Clean cache
+  command: npm cache clean -f
+
+- name: Nodejs ROLE | Npm upgrade to latest version
+  command: npm install npm@latest -g
+
+- name: Nodejs ROLE | Install n package
+  command: npm install -g n
