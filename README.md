@@ -2,12 +2,14 @@ Nodejs
 =========
 
 Ansible role for installing nodejs. Tested platforms are:
-* Debian 8
+* Debian 9
+* Ubuntu 16
 
 Requirements
 ------------
 
-Debian 8 (jessie)
+Debian 9 (stretch)
+Ubuntu 16 (xenial)
 
 Role Variables
 --------------

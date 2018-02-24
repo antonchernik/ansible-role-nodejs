@@ -1,12 +1,12 @@
 ---
-- name: Nodejs ROLE | Download setup_6.x
+- name: Nodejs ROLE | Download setup_8.x
   get_url:
-    url: https://deb.nodesource.com/setup_6.x
-    dest: /tmp/setup_6.x.sh
+    url: https://deb.nodesource.com/setup_8.x
+    dest: /tmp/setup_8.x.sh
     mode: 0777
 
-- name: Nodejs ROLE | Run setup_6.x.sh
-  shell: bash setup_6.x.sh
+- name: Nodejs ROLE | Run setup_8.x.sh
+  shell: bash setup_8.x.sh
   args:
     chdir: /tmp/
 
