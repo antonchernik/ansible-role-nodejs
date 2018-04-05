@@ -1,2 +1,4 @@
 ---
 # defaults file for antonchernik.nodejs
+npm_upgrade: 'true'
+

@@ -1,18 +1,34 @@
 ---
+- name: check if nodejs is installed
+  package:
+    name: nodejs
+    state: present
+  check_mode: true
+  register: nodejs_package_check
+  tags: nodejs
+
 - name: Nodejs ROLE | Download setup_8.x
   get_url:
     url: https://deb.nodesource.com/setup_8.x
     dest: /tmp/setup_8.x.sh
     mode: 0777
+  when: nodejs_package_check.changed
+  tags: nodejs
 
 - name: Nodejs ROLE | Run setup_8.x.sh
   shell: bash setup_8.x.sh
   args:
     chdir: /tmp/
+  become: yes
+  when: nodejs_package_check.changed
+  tags: nodejs
 
 - name: Nodejs ROLE | Updating apt cache
   apt:
     update_cache: yes
+  become: yes
+  when: nodejs_package_check.changed
+  tags: nodejs
 
 - name: Nodejs ROLE | Install packages
   apt: name={{item}}
@@ -22,12 +38,27 @@
     - libpango1.0-dev
     - libgif-dev
     - nodejs
+  become: yes
+  when: nodejs_package_check.changed
+  tags: nodejs
 
 - name: Nodejs ROLE | Clean cache
   command: npm cache clean -f
+  become: yes
+  when: nodejs_package_check.changed
+  tags: nodejs
 
 - name: Nodejs ROLE | Npm upgrade to latest version
   command: npm install npm@latest -g
+  become: yes
+  when: npm_upgrade == 'true'
+  tags: nodejs
 
 - name: Nodejs ROLE | Install n package
-  command: npm install -g n
+  npm:
+   name: n
+   global: yes
+  become: yes
+  tags: nodejs
+
+
