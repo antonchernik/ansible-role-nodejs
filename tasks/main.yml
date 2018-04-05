@@ -9,10 +9,12 @@
   shell: bash setup_8.x.sh
   args:
     chdir: /tmp/
+  become: yes
 
 - name: Nodejs ROLE | Updating apt cache
   apt:
     update_cache: yes
+  become: yes
 
 - name: Nodejs ROLE | Install packages
   apt: name={{item}}
@@ -22,12 +24,17 @@
     - libpango1.0-dev
     - libgif-dev
     - nodejs
+  become: yes
 
 - name: Nodejs ROLE | Clean cache
   command: npm cache clean -f
+  become: yes
 
 - name: Nodejs ROLE | Npm upgrade to latest version
   command: npm install npm@latest -g
+  become: yes
 
 - name: Nodejs ROLE | Install n package
   command: npm install -g n
+  become: yes
+
